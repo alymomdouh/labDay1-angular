@@ -1,0 +1,62 @@
+    <div class="row w-100 " style=" font-size: 30px;">
+      <div class="col-4 text-center" style=" border: 4px solid black;">
+          <label for="name">enter your name</label>
+          <input type="text"  [(ngModel)]="ClientName">
+          <!-- <button (click)="updatename(myvalue.value);" formtarget="_blank" >update name</button> -->
+          <br>
+          <h1>{{ClientName}}</h1>
+          <br>
+          <button (click)="ToggleTable()">Buy</button>
+      </div>
+      <div class="col-8 text-center" style="border: 4px solid black;">
+
+          <h1 class="bg-primary">{{store.Name}}</h1>
+          <br>
+          <img src="assets/{{store.Logo}}" alt="" srcset="">
+          <br>
+          <h3>We offer an explicit discount of:<span class="bg-danger">{{ Discount}}</span></h3>
+          <br>
+          <label for="categories">categories</label>
+          <select name="categoriesid" #mySelect (change)='onOptionsSelected(mySelect.value)'>
+            <option *ngFor="let catg of categories; let i = index" [value]="categories[i].ID">
+              {{categories[i].Name}}
+            </option>
+          </select>
+          <table class="table table-bordered table-inverse table-responsive" #table *ngIf="showtable">
+            <thead class="thead-inverse">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Img</th>
+                <th>CateogryID</th>
+                <th>Buy</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let Product of newProductList" [ngStyle]="{'background-color':(Product.Quantity==1)? 'yellow': 'gray'}">
+                  <!-- ng-repet *ngFor-->
+                  <td scope="row" #myid>{{Product.ID}}</td>
+                  <td>{{Product.Name}}</td>
+                  <!-- <td>{{Product.Quantity}}</td> -->
+                  <td >
+                      <div *ngIf="Product.Quantity>0">
+                        {{Product.Quantity}}
+                      </div>
+                  </td>
+                  <td>{{Product.Price}}</td>
+                  <td>{{Product.Img}}</td>
+                  <td>{{Product.CateogryID}}</td>
+                  <td>
+                    <button class="btn btn-primary" (click)="increasQuantity(Product) ">Buy it</button>
+                    <!-- (click)="increasQuantity() -->
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+          <div  *ngIf="!showtable" style="background-color: red;color: white;">
+            Thanks for purchasing from our Store {{ClientName}}
+          </div>
+      </div>
+    </div>
